@@ -1,0 +1,211 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Adding stockControlWeb design system color palette */
+  /* Base colors from shadcn */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+
+  /* StockControlWeb Brand Colors */
+  --brand-primary: oklch(0.4 0.15 240); /* Deep blue for primary elements */
+  --brand-secondary: oklch(0.6 0.2 160); /* Green for success/positive metrics */
+  --brand-accent: oklch(0.7 0.15 300); /* Purple for highlights and badges */
+  --brand-warning: oklch(0.7 0.2 60); /* Orange for warnings */
+  --brand-danger: oklch(0.6 0.2 20); /* Red for errors/negative metrics */
+
+  /* Dashboard specific colors */
+  --dashboard-sidebar: oklch(0.95 0.01 240); /* Light blue-gray for sidebar */
+  --dashboard-sidebar-active: oklch(0.9 0.02 240); /* Slightly darker for active items */
+  --dashboard-header: oklch(0.98 0 0); /* Almost white for header */
+  --dashboard-metric-blue: oklch(0.6 0.15 240); /* Blue metric cards */
+  --dashboard-metric-green: oklch(0.65 0.2 160); /* Green metric cards */
+  --dashboard-metric-cyan: oklch(0.7 0.15 200); /* Cyan metric cards */
+  --dashboard-metric-pink: oklch(0.7 0.15 340); /* Pink metric cards */
+
+  /* Chart colors */
+  --chart-1: oklch(0.6 0.15 240); /* Primary blue */
+  --chart-2: oklch(0.65 0.2 160); /* Success green */
+  --chart-3: oklch(0.7 0.15 200); /* Info cyan */
+  --chart-4: oklch(0.7 0.2 60); /* Warning orange */
+  --chart-5: oklch(0.6 0.2 20); /* Danger red */
+
+  /* Sidebar colors */
+  --sidebar: var(--dashboard-sidebar);
+  --sidebar-foreground: oklch(0.3 0.05 240);
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: var(--dashboard-sidebar-active);
+  --sidebar-accent-foreground: oklch(0.2 0.05 240);
+  --sidebar-border: oklch(0.9 0.01 240);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+
+  /* Dark mode adjustments for stockControlWeb colors */
+  --brand-primary: oklch(0.6 0.15 240);
+  --brand-secondary: oklch(0.7 0.2 160);
+  --brand-accent: oklch(0.8 0.15 300);
+  --brand-warning: oklch(0.8 0.2 60);
+  --brand-danger: oklch(0.7 0.2 20);
+
+  --dashboard-sidebar: oklch(0.2 0.01 240);
+  --dashboard-sidebar-active: oklch(0.25 0.02 240);
+  --dashboard-header: oklch(0.18 0 0);
+  --dashboard-metric-blue: oklch(0.7 0.15 240);
+  --dashboard-metric-green: oklch(0.75 0.2 160);
+  --dashboard-metric-cyan: oklch(0.8 0.15 200);
+  --dashboard-metric-pink: oklch(0.8 0.15 340);
+
+  --chart-1: oklch(0.7 0.15 240);
+  --chart-2: oklch(0.75 0.2 160);
+  --chart-3: oklch(0.8 0.15 200);
+  --chart-4: oklch(0.8 0.2 60);
+  --chart-5: oklch(0.7 0.2 20);
+
+  --sidebar: var(--dashboard-sidebar);
+  --sidebar-foreground: oklch(0.9 0.05 240);
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: var(--dashboard-sidebar-active);
+  --sidebar-accent-foreground: oklch(0.95 0.05 240);
+  --sidebar-border: oklch(0.3 0.01 240);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Base theme colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Adding stockControlWeb custom color tokens */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-warning: var(--brand-warning);
+  --color-brand-danger: var(--brand-danger);
+
+  --color-dashboard-sidebar: var(--dashboard-sidebar);
+  --color-dashboard-sidebar-active: var(--dashboard-sidebar-active);
+  --color-dashboard-header: var(--dashboard-header);
+  --color-dashboard-metric-blue: var(--dashboard-metric-blue);
+  --color-dashboard-metric-green: var(--dashboard-metric-green);
+  --color-dashboard-metric-cyan: var(--dashboard-metric-cyan);
+  --color-dashboard-metric-pink: var(--dashboard-metric-pink);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Adding stockControlWeb utility classes */
+@layer utilities {
+  .metric-card-blue {
+    @apply bg-dashboard-metric-blue/10 border-dashboard-metric-blue/20;
+  }
+
+  .metric-card-green {
+    @apply bg-dashboard-metric-green/10 border-dashboard-metric-green/20;
+  }
+
+  .metric-card-cyan {
+    @apply bg-dashboard-metric-cyan/10 border-dashboard-metric-cyan/20;
+  }
+
+  .metric-card-pink {
+    @apply bg-dashboard-metric-pink/10 border-dashboard-metric-pink/20;
+  }
+
+  .sidebar-item {
+    @apply text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
+  }
+
+  .sidebar-item-active {
+    @apply bg-sidebar-primary text-sidebar-primary-foreground;
+  }
+}
