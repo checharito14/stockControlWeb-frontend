@@ -4,20 +4,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { ChevronDown } from "lucide-react"
 
 export function Header() {
-  const tabs = ["", "", ""]
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-8">
-          {/* Tabs */}
-          <div className="flex space-x-1">
-            {tabs.map((tab, index) => (
-              <Button key={index} variant={index === 0 ? "secondary" : "ghost"} size="sm" className="rounded-full">
-                {tab} hola
-              </Button>
-            ))}
-          </div>
+          
 
           {/* Badge */}
           <Badge variant="secondary" className="bg-purple-100 text-purple-700 px-3 py-1"></Badge>
