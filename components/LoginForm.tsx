@@ -29,9 +29,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
 		<>
 			<form onSubmit={handleSubmit}>
 				<div>
-					<label htmlFor="email">
-						Correo electrónico
-					</label>
+					<label htmlFor="email">Correo electrónico</label>
 					<input
 						type="email"
 						id="email"
@@ -40,13 +38,12 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
 						onChange={handleInputChange}
 						required
 						placeholder="tu@email.com"
+						className="block w-full p-3 bg-transparent border border-border rounded-md"
 					/>
 				</div>
 
 				<div>
-					<label htmlFor="password">
-						Contraseña
-					</label>
+					<label htmlFor="password">Contraseña</label>
 					<input
 						type="password"
 						id="password"
@@ -55,24 +52,25 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
 						onChange={handleInputChange}
 						required
 						placeholder="••••••••"
+						className="block w-full p-3 bg-transparent border border-border rounded-md "
 					/>
 				</div>
 
-				<button type="submit">
+				<button
+					type="submit"
+					className="w-full mt-4 px-4 py-2 bg-accent text-primary rounded-md"
+				>
 					Iniciar Sesión
 				</button>
 			</form>
 
 			<div>
-				<p>
-					¿No tienes cuenta?{" "}
-					<button
-						type="button"
-						onClick={onSwitchToRegister}
-					>
-						Regístrate aquí
-					</button>
-				</p>
+				<button
+					className="mt-4 text-sm text-center text-text-secondary cursor-pointer"
+					onClick={onSwitchToRegister}
+				>
+					¿No tienes cuenta? Regístrate aquí
+				</button>
 			</div>
 		</>
 	);
