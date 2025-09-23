@@ -46,6 +46,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 						onChange={handleInputChange}
 						required
 						placeholder="Ingresa tu nombre completo"
+						className="block w-full p-3 bg-transparent border border-border rounded-md "
 					/>
 				</div>
 
@@ -61,6 +62,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 						onChange={handleInputChange}
 						required
 						placeholder="tu@email.com"
+						className="block w-full p-3 bg-transparent border border-border rounded-md "
 					/>
 				</div>
 
@@ -76,6 +78,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 						onChange={handleInputChange}
 						required
 						placeholder="••••••••"
+						className="block w-full p-3 bg-transparent border border-border rounded-md "
 					/>
 				</div>
 
@@ -91,10 +94,11 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 						onChange={handleInputChange}
 						required
 						placeholder="••••••••"
+						className="block w-full p-3 bg-transparent border border-border rounded-md "
 					/>
 				</div>
 
-				<button type="submit">
+				<button type="submit" className="w-full mt-4 px-4 py-2 bg-accent text-primary rounded-md">
 					Crear Cuenta
 				</button>
 			</form>
