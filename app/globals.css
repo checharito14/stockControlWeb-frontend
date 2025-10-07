@@ -52,7 +52,6 @@
 .bg-dashboard { background-color: var(--color-background); }
 .bg-card { background-color: var(--color-surface); }
 .bg-sidebar { background-color: var(--color-sidebar); }
-.bg-sidebar-active { background-color: var(--color-sidebar-active); }
 
 .text-primary { color: var(--color-text-primary); }
 .text-secondary { color: var(--color-text-secondary); }
