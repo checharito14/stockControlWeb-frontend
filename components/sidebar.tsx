@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 
 export function Sidebar() {
 	const [inventoryOpen, setInventoryOpen] = useState(false);
@@ -27,9 +28,21 @@ export function Sidebar() {
 	];
 
 	const inventoryItems = [
-		{ icon: ChartLine, label: "Informes", href: "/dashboard/inventory/reports" },
-		{ icon: Tag, label: "Promociones", href: "/dashboard/inventory/promotions" },
-		{ icon: Users, label: "Clientes", href: "/dashboard/inventory/clients" },
+		{
+			icon: ChartLine,
+			label: "Informes",
+			href: "/dashboard/inventory/reports",
+		},
+		{
+			icon: Tag,
+			label: "Promociones",
+			href: "/dashboard/inventory/promotions",
+		},
+		{
+			icon: Users,
+			label: "Clientes",
+			href: "/dashboard/inventory/clients",
+		},
 	];
 
 	// Función para verificar si una ruta está activa
@@ -42,17 +55,15 @@ export function Sidebar() {
 
 	// Función para verificar si algún item del inventory está activo
 	const isInventoryItemActive = () => {
-		return inventoryItems.some(item => isActive(item.href));
+		return inventoryItems.some((item) => isActive(item.href));
 	};
 
-	// Efecto para abrir automáticamente el menú de inventory si hay un item activo
 	useEffect(() => {
 		if (isInventoryItemActive()) {
 			setInventoryOpen(true);
 		}
 	}, [pathname]);
 
-	// Función para navegar
 	const handleNavigation = (href: string) => {
 		router.push(href);
 	};
@@ -60,11 +71,14 @@ export function Sidebar() {
 	return (
 		<div className="w-64 bg-white border-r border-gray-200 flex flex-col">
 			{/* Logo */}
-			<div className="p-4 border-b border-gray-200">
-				<div className="flex items-center space-x-2">
-					<div className="w-8 h-8 bg-purple-600 rounded"></div>
-					<p className="font-bold text-sm">StockControl</p>
-				</div>
+			<div className="p-4 border-b border-gray-200 flex items-center justify-center ">
+				<Image
+					src="/stockControlLogo.webp"
+					alt="Logo"
+					width={120}
+					height={40}
+					className="object-contain"
+				/>
 			</div>
 
 			<nav className="flex-1 p-4 space-y-2">
@@ -83,7 +97,9 @@ export function Sidebar() {
 
 				<div className="pt-5">
 					<Button
-						variant={isInventoryItemActive() ? "secondary" : "ghost"}
+						variant={
+							isInventoryItemActive() ? "secondary" : "ghost"
+						}
 						className="w-full justify-start"
 						onClick={() => {
 							setInventoryOpen(!inventoryOpen);
@@ -108,7 +124,9 @@ export function Sidebar() {
 						{inventoryItems.map((item, index) => (
 							<Button
 								key={index}
-								variant={isActive(item.href) ? "secondary" : "ghost"}
+								variant={
+									isActive(item.href) ? "secondary" : "ghost"
+								}
 								size="sm"
 								className="w-full justify-start mb-3"
 								onClick={() => handleNavigation(item.href)}

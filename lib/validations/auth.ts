@@ -4,6 +4,12 @@ export const ErrorSchema = z.object({
 	message: z.string()
 })
 
+export const ErrorResponseSchema = z.object({
+	message: z.array(z.string()),
+	error: z.string(),
+	statusCode: z.number(),
+});
+
 export const SuccessSchema = z.object({
 	  message: z.string()
 })
@@ -31,7 +37,12 @@ export const ProductSchema = z.object({
 		name: z.string(),
 		price: z.coerce.number(),
 		stock: z.number(),
-		
+})
+
+export const ProductFormSchema = z.object({
+		name: z.string().min(1, { message: "Ingresa un nombre válido" }),
+		price: z.coerce.number().min(1, { message: "El precio debe ser mayor a 0" }),
+		stock: z.coerce.number().min(1, { message: "El stock debe ser mayor a 0" }),
 })
 
 export const ProductsResponseSchema = z.array(ProductSchema)

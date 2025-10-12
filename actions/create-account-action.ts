@@ -1,6 +1,6 @@
 "use server";
 
-import { ErrorSchema, RegisterSchema, SuccessSchema } from "@/lib/validations/auth";
+import { ErrorResponseSchema, ErrorSchema, RegisterSchema, SuccessSchema } from "@/lib/validations/auth";
 
 type ActionStateType = {
 	errors: string[];
@@ -42,9 +42,9 @@ export async function register(prevState: ActionStateType, formData: FormData) {
 	const json = await req.json();
 
 	if (!req.ok) {
-		const { message } = ErrorSchema.parse(json);
+		const error = ErrorResponseSchema.parse(json);
 		return {
-			errors: [message],
+			errors: error.message.map((error) => error),
 			success: "",
 		};
 	}
