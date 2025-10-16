@@ -1,6 +1,6 @@
 "use client"
 
-import { Product } from "@/lib/validations/auth";
+import { Product } from "@/lib/schemas/auth";
 import { Card } from "../ui/card";
 import { formatCurrency, isAvailable } from "@/lib/utils";
 import { Trash2 } from "lucide-react";

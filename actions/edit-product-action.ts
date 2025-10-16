@@ -1,6 +1,6 @@
 "use server";
 
-import { ErrorResponseSchema, Product, ProductFormSchema } from "@/lib/validations/auth";
+import { ErrorResponseSchema, Product, ProductFormSchema } from "@/lib/schemas/auth";
 
 type ActionStateType = {
 	errors: string[];

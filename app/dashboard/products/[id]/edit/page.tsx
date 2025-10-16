@@ -1,6 +1,6 @@
 import EditProductForm from "@/components/products/EditProductForm";
 import ProductForm from "@/components/products/ProductForm";
-import { ProductSchema } from "@/lib/validations/auth";
+import { ProductSchema } from "@/lib/schemas/products";
 import { notFound } from "next/navigation";
 
 async function getProductById(id: string) {

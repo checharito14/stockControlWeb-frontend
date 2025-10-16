@@ -1,6 +1,7 @@
 "use server"
 
-import { ErrorSchema, LoginSchema } from "@/lib/validations/auth"
+import { ErrorSchema, LoginSchema } from "@/lib/schemas/auth"
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 type ActionStateType = {
@@ -35,8 +36,8 @@ export async function login(prevState: ActionStateType, formData: FormData) {
 		},
 	})
 
-    
     const json = await req.json()
+    console.log("json", json)
 
  
     if(!req.ok) {
@@ -46,6 +47,15 @@ export async function login(prevState: ActionStateType, formData: FormData) {
         }
     }
     
+    (await cookies()).set({
+        name: "AUTH_TOKEN",
+        value: json.access_token,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7
+    })
 
     redirect("/dashboard")
 }

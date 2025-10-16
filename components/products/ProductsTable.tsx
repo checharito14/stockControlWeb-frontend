@@ -1,4 +1,4 @@
-import { Product } from "@/lib/validations/auth";
+import { Product } from "@/lib/schemas/auth";
 import ProductCard from "./ProductCard";
 import { Button } from "../ui/button";
 import { CircleFadingPlus } from "lucide-react";

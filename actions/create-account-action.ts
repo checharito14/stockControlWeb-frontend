@@ -1,6 +1,6 @@
 "use server";
 
-import { ErrorResponseSchema, ErrorSchema, RegisterSchema, SuccessSchema } from "@/lib/validations/auth";
+import { ErrorResponseSchema, ErrorSchema, RegisterSchema, SuccessSchema } from "@/lib/schemas/auth";
 
 type ActionStateType = {
 	errors: string[];
