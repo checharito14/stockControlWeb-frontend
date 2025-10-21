@@ -1,4 +1,3 @@
-import ProductCard from "@/components/products/ProductCard";
 import ProductsTable from "@/components/products/ProductsTable";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,19 +7,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { ProductsResponseSchema } from "@/lib/validations/auth";
+import { getProducts } from "@/lib/products";
 import { CircleFadingPlus } from "lucide-react";
 import Link from "next/link";
-
-async function getProducts() {
-	const url = `${process.env.API_URL}/products`;
-	const req = await fetch(url);
-	const json = await req.json();
-
-	const products = ProductsResponseSchema.parse(json);
-
-	return products;
-}
 
 export default async function ProductsPage() {
 	const products = await getProducts();

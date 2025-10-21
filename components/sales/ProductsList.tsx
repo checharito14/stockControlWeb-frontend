@@ -1,34 +1,51 @@
-import { ProductsResponseSchema } from "@/lib/validations/auth";
+"use client";
+
+import { useCartStore } from "@/lib/store";
+import { Product } from "@/lib/schemas/products";
 import { CirclePlus, Search } from "lucide-react";
+import { useState } from "react";
 
-async function getProducts() {
-	const url = `${process.env.API_URL}/products`;
-	const req = await fetch(url);
-	const json = await req.json();
-
-	const products = ProductsResponseSchema.parse(json);
-
-	return products;
+interface ProductsListProps {
+	products: Product[];
 }
 
-export default async function ProductsList() {
-	const products = await getProducts();
+export default function ProductsList({ products }: ProductsListProps) {
+	const [searchTerm, setSearchTerm] = useState("");
+	const addToCart = useCartStore((state) => state.addToCart);
+
+	const filteredProducts = products.filter(product =>
+		product.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	return (
 		<>
+			{/* Barra de búsqueda */}
+			<div className="flex items-center space-x-2 mb-6">
+				<div className="relative flex-grow">
+					<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+						<Search size={20} />
+					</span>
+					<input
+						type="text"
+						placeholder="Buscar Producto..."
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+						className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+					/>
+				</div>
+			</div>
+
 			{/* Listado de Productos Disponibles */}
 			<div className="space-y-4 max-h-[calc(100vh-250px)] overflow-y-auto pr-2">
-				{" "}
-				{/* Altura ajustada */}
 				<h2 className="text-lg font-semibold text-gray-700">
 					Buscador de Productos
 				</h2>
-				{products.length === 0 ? (
+				{filteredProducts.length === 0 ? (
 					<p className="text-gray-500">
-						No se encontraron productos.
+						{searchTerm ? "No se encontraron productos que coincidan con la búsqueda." : "No se encontraron productos."}
 					</p>
 				) : (
-					products.map((product) => (
+					filteredProducts.map((product) => (
 						<div
 							key={product.id}
 							className="flex items-center bg-gray-50 p-3 rounded-lg border border-gray-200"
@@ -42,7 +59,7 @@ export default async function ProductsList() {
 								${product.price.toFixed(2)}
 							</span>
 							<button
-								// onClick={() => addToCart(product)}
+								onClick={() => addToCart(product)}
 								className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm flex items-center hover:bg-blue-700 transition-colors"
 							>
 								<CirclePlus className="mr-2" /> Agregar
