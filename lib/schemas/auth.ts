@@ -31,5 +31,12 @@ export const LoginSchema = z.object({
 	password: z.string().min(1, "La contraseña es requerida"),
 });
 
+export const UserSchema = z.object({
+	id: z.number(),
+	email: z.string(),
+	storeName: z.string(),
+})
+
 export type RegisterInput = z.infer<typeof RegisterSchema>;
 export type LoginInput = z.infer<typeof LoginSchema>;
+export type User = z.infer<typeof UserSchema>;
