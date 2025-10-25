@@ -15,3 +15,12 @@ export const formatCurrency = (value: number) => {
         currency: "MXN",
     }).format(value);
 }
+
+export const formatDate = (dateString: string) => {
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("es-MX");
+  } catch {
+    return dateString;
+  }
+};

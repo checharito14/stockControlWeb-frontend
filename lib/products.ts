@@ -2,10 +2,11 @@
 
 import { ProductsResponseSchema } from "./schemas/products";
 import { getAuthToken } from "./api";
+import { cache } from "react";
 
-export async function getProducts() {
+export const getProducts = cache(async () =>  {
 	const token = await getAuthToken();
-	const url = `${process.env.API_URL || 'http://localhost:3001'}/products`;
+	const url = `${process.env.API_URL}/products`;
 	
 	const req = await fetch(url, {
 		headers: {
@@ -22,4 +23,4 @@ export async function getProducts() {
 
 	const products = ProductsResponseSchema.parse(json);
 	return products;
-}
+})
