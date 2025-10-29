@@ -31,17 +31,17 @@ export function Sidebar() {
 		{
 			icon: ChartLine,
 			label: "Informes",
-			href: "/dashboard/inventory/reports",
+			href: "/dashboard/reports",
 		},
 		{
 			icon: Tag,
 			label: "Promociones",
-			href: "/dashboard/inventory/promotions",
+			href: "/dashboard/promotions",
 		},
 		{
 			icon: Users,
 			label: "Clientes",
-			href: "/dashboard/inventory/clients",
+			href: "/dashboard/clients",
 		},
 	];
 
