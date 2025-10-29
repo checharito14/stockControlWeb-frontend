@@ -1,12 +1,14 @@
 "use client"
 
-import { Product } from "@/lib/schemas/auth";
 import { Card } from "../ui/card";
 import { formatCurrency, isAvailable } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import Link from "next/link";
+import { Product } from "@/lib/schemas/products";
+import ConfirmDialog from "../ui/ConfirmDialog";
+import DeleteProductForm from "./DeleteProductForm";
 
 export default function ProductCard({ product }: { product: Product }) {
 	
@@ -66,11 +68,14 @@ export default function ProductCard({ product }: { product: Product }) {
 			</Card>
 
 			{isOpen && (
-				<ConfirmDeleteDialog
+				<ConfirmDialog
 					isOpen={isOpen}
 					onClose={() => setIsOpen(false)}
-					productId={product.id}
-				/>
+					title="Confirmar eliminación"
+					description="¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer."
+				>
+					<DeleteProductForm productId={product.id} />
+				</ConfirmDialog>
 			)}
 		</>
 	);

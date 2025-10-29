@@ -1,11 +1,10 @@
-import { Product } from "@/lib/schemas/auth";
 import ProductCard from "./ProductCard";
 import { Button } from "../ui/button";
 import { CircleFadingPlus } from "lucide-react";
 import Link from "next/link";
+import { Product } from "@/lib/schemas/products";
 
 export default function ProductsTable({ products }: { products: Product[] }) {
-    
 	return (
 		<>
 			<div className="flex items-center space-x-4 w-full md:w-auto mb-8">
@@ -19,8 +18,8 @@ export default function ProductsTable({ products }: { products: Product[] }) {
 					/>
 				</div>
 				{/* Botón "Añadir Producto" */}
-                <Link href="/dashboard/products/new">
-					<Button variant="base" >
+				<Link href="/dashboard/products/new">
+					<Button variant="base">
 						<CircleFadingPlus />
 						<span className="hidden md:inline-block">
 							Añadir Producto

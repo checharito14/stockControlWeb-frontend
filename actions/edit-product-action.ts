@@ -1,6 +1,8 @@
 "use server";
 
-import { ErrorResponseSchema, Product, ProductFormSchema } from "@/lib/schemas/auth";
+import { getAuthToken } from "@/lib/api";
+import { ErrorResponseSchema } from "@/lib/schemas/auth";
+import { Product, ProductFormSchema } from "@/lib/schemas/products";
 
 type ActionStateType = {
 	errors: string[];
@@ -17,6 +19,7 @@ export async function editProduct(
 		price: formData.get("price"),
 		stock: formData.get("stock"),
 	});
+	
 	if (!products.success) {
 		return {
 			errors: products.error.issues.map((error) => error.message),
@@ -24,11 +27,13 @@ export async function editProduct(
 		};
 	}
 
+	const token = await getAuthToken()
 	const url = `${process.env.API_URL}/products/${productId}`;
 	const req = await fetch(url, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
+			"Authorization": `Bearer ${token}`
 		},
 		body: JSON.stringify(products.data),
 	});
