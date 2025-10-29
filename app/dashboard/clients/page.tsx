@@ -8,7 +8,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { getClients } from "@/lib/clients";
-import { CircleFadingPlus, Link } from "lucide-react";
+import { CircleFadingPlus } from "lucide-react";
+import Link from "next/link";
 
 export default async function ClientsPage() {
 	const clients = await getClients();

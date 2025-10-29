@@ -5,13 +5,20 @@ import { Button } from "../ui/button";
 import { CircleFadingPlus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Client } from "@/lib/schemas/clients";
-import { getClients } from "@/lib/clients";
 import { formatDate } from "@/lib/utils";
+import ConfirmDialog from "../ui/ConfirmDialog";
+import DeleteClientForm from "./DeleteClientForm";
 
 export default function ClientsTable({ clients }: { clients: Client[] }) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
+	const [selectedClientId, setSelectedClientId] = useState<number | null>(
+		null
+	);
+
 	const itemsPerPage = 10;
+
+	const [isOpen, setIsOpen] = useState(false);
 
 	// --- Lógica de Búsqueda ---
 	const filteredClients = clients.filter(
@@ -34,12 +41,9 @@ export default function ClientsTable({ clients }: { clients: Client[] }) {
 
 	const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-
-
 	return (
 		<>
 			<div className="flex items-center space-x-4 w-full md:w-auto mb-8">
-				{/* Barra de búsqueda */}
 				<div className="relative flex-1">
 					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400"></div>
 					<input
@@ -53,7 +57,7 @@ export default function ClientsTable({ clients }: { clients: Client[] }) {
 						className="w-full pl-10 pr-4 py-2 border border-border-light rounded-md focus:outline-none"
 					/>
 				</div>
-				{/* Botón "Añadir Cliente" */}
+
 				<Link href="/dashboard/clients/new">
 					<Button variant="base">
 						<CircleFadingPlus />
@@ -107,43 +111,67 @@ export default function ClientsTable({ clients }: { clients: Client[] }) {
 						</tr>
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
-						{currentClients.map((client) => (
-							<tr key={client.id}>
-								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-									{client.name}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-									{client.lastName}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-									{client.phone}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-									{client.email}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-									{formatDate(client.createdAt)}
-								</td>
-								<td className="px-6 py-4 flex items-center justify-center text-sm font-medium space-x-2">
-									<Link
-										href={`/dashboard/clients/${client.id}/edit`}
-									>
-										<button className="text-blue-500 hover:text-blue-700 cursor-pointer">
-											Editar
-										</button>
-									</Link>
-									<button
-										className="text-red-500 cursor-pointer"
-										onClick={() => {}}
-									>
-										<Trash2 size={18} />
-									</button>
+						{currentClients.length === 0 ? (
+							<tr>
+								<td
+									colSpan={6}
+									className="px-6 py-4 text-center text-gray-500"
+								>
+									No se encontraron clientes.
 								</td>
 							</tr>
-						))}
+						) : (
+							currentClients.map((client) => (
+								<tr key={client.id}>
+									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+										{client.name}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{client.lastName}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{client.phone}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{client.email}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{formatDate(client.createdAt)}
+									</td>
+									<td className="px-6 py-4 flex items-center justify-center text-sm font-medium space-x-2">
+										<Link
+											href={`/dashboard/clients/${client.id}/edit`}
+										>
+											<button className="text-blue-500 hover:text-blue-700 cursor-pointer">
+												Editar
+											</button>
+										</Link>
+										<button
+											className="text-red-500 cursor-pointer"
+											onClick={() =>
+												setSelectedClientId(client.id)
+											}
+										>
+											<Trash2 size={18} />
+										</button>
+									</td>
+								</tr>
+							))
+						)}
 					</tbody>
 				</table>
 			</div>
+
+			{selectedClientId && (
+				<ConfirmDialog
+					isOpen={!!selectedClientId}
+					onClose={() => setSelectedClientId(null)}
+					title="Confirmar eliminación"
+					description="¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer."
+				>
+					<DeleteClientForm clientId={selectedClientId} />
+				</ConfirmDialog>
+			)}
 
 			{totalPages > 1 && (
 				<nav
