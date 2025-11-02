@@ -36,7 +36,7 @@ export function Sidebar() {
 		{
 			icon: Tag,
 			label: "Promociones",
-			href: "/dashboard/promotions",
+			href: "/dashboard/coupons",
 		},
 		{
 			icon: Users,
