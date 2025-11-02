@@ -4,7 +4,6 @@ import { Card } from "../ui/card";
 import { formatCurrency, isAvailable } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import Link from "next/link";
 import { Product } from "@/lib/schemas/products";
 import ConfirmDialog from "../ui/ConfirmDialog";

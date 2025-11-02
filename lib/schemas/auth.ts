@@ -5,7 +5,7 @@ export const ErrorSchema = z.object({
 })
 
 export const ErrorResponseSchema = z.object({
-	message: z.array(z.string()),
+	message: z.union([z.string(), z.array(z.string())]),
 	error: z.string(),
 	statusCode: z.number(),
 });
