@@ -123,7 +123,7 @@ export default function ClientsTable({ clients }: { clients: Client[] }) {
 						) : (
 							currentClients.map((client) => (
 								<tr key={client.id}>
-									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
 										{client.name}
 									</td>
 									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

@@ -22,7 +22,7 @@ export default function AddCouponForm() {
 		}
 		if (state.success) {
 			toast.success(state.success);
-			router.push("/dashboard/coupon");
+			router.push("/dashboard/coupons");
 		}
 	}, [state]);
 
