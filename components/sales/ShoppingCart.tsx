@@ -1,147 +1,86 @@
-import { Product } from "@/lib/validations/auth";
-import { Delete } from "lucide-react";
+"use client";
+
 import { useState } from "react";
+import { useCartStore } from "@/lib/store";
+import { Client } from "@/lib/schemas/clients";
+import { Coupon } from "@/lib/schemas/coupons";
+import { CartItem } from "./CartItem";
+import { ClientSelector } from "./ClientSelector";
+import { CouponSelector } from "./CouponSelector";
+import { CartSummary } from "./CartSummary";
+import { ConfirmSaleModal } from "./ConfirmSaleModal";
 
-export default function ShoppingCart() {
+interface ShoppingCartProps {
+	clients: Client[];
+	coupons: Coupon[];
+}
 
-    const [cart, setCart] = useState<Product[]>([]);
+export default function ShoppingCart({ clients, coupons }: ShoppingCartProps) {
+	const [showConfirmModal, setShowConfirmModal] = useState(false);
+	
+	const cartContent = useCartStore((state) => state.cartContent);
+	const appliedCoupon = useCartStore((state) => state.appliedCoupon);
+	const getSubtotal = useCartStore((state) => state.getSubtotal);
+	const getDiscount = useCartStore((state) => state.getDiscount);
+	const getTotal = useCartStore((state) => state.getTotal);
+
+	const subtotal = getSubtotal();
+	const discount = getDiscount();
+	const total = getTotal();
+	const itemCount = cartContent.reduce((acc, item) => acc + item.quantity, 0);
+	const isEmpty = cartContent.length === 0;
+
 	return (
 		<div className="w-96 bg-white rounded-lg shadow p-6 flex flex-col">
 			<h2 className="text-2xl font-bold text-gray-800 mb-6">
 				CARRITO DE COMPRAS
 			</h2>
 
-			{/* Artículos en el Carrito */}
-			<div className="flex-grow space-y-4 max-h-[calc(100vh-450px)] overflow-y-auto pr-2 mb-6">
-				{" "}
-				{/* Altura ajustada */}
-				{cart.length === 0 ? (
+			{/* Lista de artículos */}
+			<div className="flex-grow space-y-4 overflow-y-auto pr-2 mb-4">
+				{isEmpty ? (
 					<p className="text-gray-500 text-center py-4">
 						El carrito está vacío.
 					</p>
 				) : (
-					cart.map((item) => (
-						<div
-							key={item.id}
-							className="flex items-center justify-between border-b border-gray-200 pb-3"
-						>
-							<div className="flex items-center flex-grow">
-								<div>
-									<h3 className="font-medium text-gray-800">
-										{item.name}
-									</h3>
-									<p className="text-xs text-gray-500">
-										SKU: {item.id}
-									</p>
-								</div>
-							</div>
-							<div className="flex items-center space-x-2">
-								<button
-									// onClick={() =>
-									// 	updateCartItemQuantity(
-									// 		item.id,
-									// 		item.quantity - 1
-									// 	)
-									// }
-									className="px-2 py-1 bg-gray-200 rounded-md text-gray-700 hover:bg-gray-300"
-								>
-									-
-								</button>
-								<span className="font-medium text-gray-700">
-									{item.name}
-								</span>
-								<button
-									// onClick={() =>
-									// 	updateCartItemQuantity(
-									// 		item.id,
-									// 		item.quantity + 1
-									// 	)
-									// }
-									className="px-2 py-1 bg-gray-200 rounded-md text-gray-700 hover:bg-gray-300"
-								>
-									+
-								</button>
-								<span className="font-semibold text-gray-800 w-16 text-right">
-									{/* ${(item.price * item.name).toFixed(2)} */}
-								</span>
-								<button
-									// onClick={() => removeFromCart(item.id)}
-									className="text-red-500 hover:text-red-700 p-1"
-								>
-									<Delete size={18} />
-								</button>
-							</div>
-						</div>
+					cartContent.map((item) => (
+						<CartItem key={item.id} item={item} />
 					))
 				)}
 			</div>
 
-			{/* Información del Cliente y Descuento */}
-			{/* <div className="space-y-3 mb-6 pt-4 border-t border-gray-200">
-				<div>
-					<label
-						htmlFor="customer"
-						className="block text-sm font-medium text-gray-700 mb-1"
-					>
-						Información del Cliente
-					</label>
-					<input
-						type="text"
-						id="customer"
-						value={customerInfo}
-						onChange={(e) => setCustomerInfo(e.target.value)}
-						placeholder="Añadir Cliente"
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-				</div>
-				<div>
-					<label
-						htmlFor="discount"
-						className="block text-sm font-medium text-gray-700 mb-1"
-					>
-						Código de Descuento
-					</label>
-					<input
-						type="text"
-						id="discount"
-						value={discountCode}
-						onChange={(e) => setDiscountCode(e.target.value)}
-						placeholder="Aplicar código"
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-				</div>
-			</div> */}
+			{/* Cliente y Cupón */}
+			<div className="mb-2 pt-4 border-gray-200 space-y-3">
+				<ClientSelector clients={clients} />
+				<CouponSelector coupons={coupons} disabled={isEmpty} />
+			</div>
 
-			{/* Total a Pagar y Botones de Pago */}
-			{/* <div className="mt-auto pt-6 border-t border-gray-200">
-				<div className="flex justify-between items-end mb-4">
-					<div>
-						<p className="text-sm text-gray-600">
-							Subtotal: ${subtotal.toFixed(2)}
-						</p>
-						<p className="text-sm text-red-500">
-							Descuento: -${discountAmount.toFixed(2)}
-						</p>
-					</div>
-					<div className="text-right">
-						<p className="text-xs text-gray-500 uppercase">
-							Total a pagar
-						</p>
-						<p className="text-4xl font-extrabold text-gray-900">
-							${totalToPay.toFixed(2)}
-						</p>
-					</div>
-				</div>
-				<div className="grid grid-cols-3 gap-2">
-					<button
-						onClick={() => handlePayment("Card")}
-						className="col-span-2 bg-blue-600 text-white p-3 rounded-lg shadow-md hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
-					>
-						<Search size={20} />
-						<span>PAGAR CON TARJETA</span>
-					</button>
-				</div> */}
-			{/* </div> */}
+			{/* Resumen y Total */}
+			<div className="mt-auto pt-4">
+				<CartSummary
+					subtotal={subtotal}
+					discount={discount}
+					total={total}
+					itemCount={itemCount}
+					discountPercentage={appliedCoupon?.discountPercentage}
+				/>
+				
+				<button
+					onClick={() => setShowConfirmModal(true)}
+					disabled={isEmpty}
+					className="w-full mt-3 bg-green-600 text-white p-3 rounded-lg shadow-md hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+				>
+					PROCESAR VENTA
+				</button>
+			</div>
+
+			{/* Modal de Confirmación */}
+			<ConfirmSaleModal
+				open={showConfirmModal}
+				onOpenChange={setShowConfirmModal}
+				total={total}
+				itemCount={itemCount}
+			/>
 		</div>
 	);
 }
