@@ -22,7 +22,7 @@ export default async function ClientsPage() {
 					<Card className="w-full max-w-lg mx-auto">
 						<CardHeader className="text-center pb-4">
 							<CardTitle className="text-xl my-3">
-								Aun no haz registrado ningun cliente
+								Aun no has registrado ningun cliente
 							</CardTitle>
 							<CardDescription>
 								Comienza a registrar tus clientes

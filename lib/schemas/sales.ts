@@ -28,9 +28,9 @@ export const SaleDetailResponseSchema = z.object({
 	saleId: z.number(),
 	productId: z.number(),
 	productName: z.string(),
-	price: z.number(),
+	price: z.coerce.number(),
 	quantity: z.number(),
-	subtotal: z.number(),
+	subtotal: z.coerce.number(),
 });
 
 // Venta completa (respuesta del backend)
@@ -39,11 +39,11 @@ export const SaleSchema = z.object({
 	userId: z.number(),
 	clientId: z.number().nullable(),
 	couponId: z.number().nullable(),
-	subtotal: z.number(),
-	discount: z.number(),
-	total: z.number(),
+	subtotal: z.coerce.number(),
+	discount: z.coerce.number(),
+	total: z.coerce.number(),
 	createdAt: z.string().or(z.date()),
-	details: z.array(SaleDetailResponseSchema).optional(),
+	details: z.array(SaleDetailResponseSchema),
 });
 
 // Array de ventas (para listados)
