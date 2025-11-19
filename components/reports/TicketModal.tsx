@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Download, X } from "lucide-react";
 import { SaleSchema, type Sale } from "@/lib/schemas/sales";
 import { Button } from "../ui/button";
 import { TicketBody } from "./TicketBody";
+import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import { TicketPDF } from "./TicketPDF";
 
 type TicketModalProps = {
 	isOpen: boolean;
@@ -17,10 +20,10 @@ export default function TicketModal({
 	onClose,
 	saleId,
 }: TicketModalProps) {
-
 	const [sale, setSale] = useState<Sale | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+	const [downloading, setDownloading] = useState(false);
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -29,9 +32,8 @@ export default function TicketModal({
 			setLoading(false);
 			return;
 		}
-		
-		const controller = new AbortController();
 
+		const controller = new AbortController();
 
 		async function fetchSale() {
 			try {
@@ -42,7 +44,7 @@ export default function TicketModal({
 				});
 
 				if (!req.ok) {
-					throw new Error('Error al cargar la venta');
+					throw new Error("Error al cargar la venta");
 				}
 
 				const json = await req.json();
@@ -51,10 +53,9 @@ export default function TicketModal({
 
 				setSale(saleParsed);
 				setLoading(false);
-				
 			} catch (err: any) {
 				if (err.name !== "AbortError") {
-					setError('Hubo un error al cargar la venta.');
+					setError("Hubo un error al cargar la venta.");
 					console.error("Error al cargar la venta", err);
 				}
 			}
@@ -64,6 +65,23 @@ export default function TicketModal({
 
 		return () => controller.abort();
 	}, [isOpen, saleId]);
+
+	const handleDownloadPDF = async () => {
+		if (!sale) return;
+
+		setDownloading(true);
+		try {
+			
+			const blob = await pdf(<TicketPDF sale={sale} />).toBlob();
+			
+			saveAs(blob, `ticket-venta-${saleId}.pdf`);
+		} catch (error) {
+			console.error("Error al generar PDF:", error);
+			setError("Hubo un error al generar el PDF.");
+		} finally {
+			setDownloading(false);
+		}
+	};
 
 	if (!isOpen) {
 		return null;
@@ -95,18 +113,19 @@ export default function TicketModal({
 						</button>
 					</div>
 
-				{/* Content */}
-				<div className="px-6 pb-4">
-					{loading && (
-						<div className="flex justify-center items-center py-12">
-							<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-						</div>
-					)}
-					{error && (
-						<p className="text-red-500 text-center py-6">{error}</p>
-					)}
-					{sale && <TicketBody sale={sale} />}
-				</div>			
+					<div className="px-6 pb-4">
+						{loading && (
+							<div className="flex justify-center items-center py-12">
+								<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+							</div>
+						)}
+						{error && (
+							<p className="text-red-500 text-center py-6">
+								{error}
+							</p>
+						)}
+						{sale && <TicketBody sale={sale} />}
+					</div>
 					<div className="flex items-center justify-end space-x-3 p-6 pt-4 bg-gray-50 rounded-b-lg">
 						<Button
 							variant="outline"
@@ -115,6 +134,20 @@ export default function TicketModal({
 						>
 							Cerrar
 						</Button>
+						{sale && (
+							<Button
+								title="Descargar PDF"
+								variant="secondary"
+								onClick={handleDownloadPDF}
+								disabled={downloading}
+							>
+								{downloading ? (
+									<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+								) : (
+									<Download />
+								)}
+							</Button>
+						)}
 					</div>
 				</div>
 			</div>
