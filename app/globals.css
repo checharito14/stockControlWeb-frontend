@@ -18,9 +18,8 @@
   --color-border-light: #f1f5f9;     /* Bordes muy suaves */
   --color-divider: #cbd5e1;          /* Líneas separadoras */
   
-  /* Accent color (púrpura del dashboard) */
-  --color-accent: #E2E8F0;           /* Gris hover */
-  --color-accent-dark: #E2E8F0;      /* Gris oscuro */
+  --color-accent: #1e293b;           /* Azul accent */
+  --color-accent-light: #4b6287;     /* Azul accent claro para hover */
   
   /* Estados básicos */
   --color-success: #10b981;          /* Verde éxito */
@@ -53,7 +52,6 @@
 .bg-dashboard { background-color: var(--color-background); }
 .bg-card { background-color: var(--color-surface); }
 .bg-sidebar { background-color: var(--color-sidebar); }
-.bg-sidebar-active { background-color: var(--color-sidebar-active); }
 
 .text-primary { color: var(--color-text-primary); }
 .text-secondary { color: var(--color-text-secondary); }
@@ -63,8 +61,6 @@
 .border-light { border-color: var(--color-border-light); }
 .border-divider { border-color: var(--color-divider); }
 
-.text-accent { color: var(--color-accent); }
-.bg-accent { background-color: var(--color-accent); }
 .border-accent { border-color: var(--color-accent); }
 
 /* Estilos base */
