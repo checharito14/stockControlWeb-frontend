@@ -26,16 +26,13 @@ export default async function SalesHistoryPage({ searchParams }: PageProps) {
         <h1 className="text-3xl font-bold text-gray-800">Historial de Ventas</h1>
       </div>
 
-      {/* Filtros */}
       <SalesHistoryFilters 
         currentPeriod={params.period || 'daily'} 
         dateRange={{ from: data.period.from, to: data.period.to }}
       />
 
-      {/* Estadísticas */}
       <SalesStats stats={data.stats} periodType={data.period.type} />
 
-      {/* Tabla de ventas */}
       <SalesHistoryTable sales={data.sales} />
     </div>
   );
