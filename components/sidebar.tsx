@@ -45,7 +45,6 @@ export function Sidebar() {
 		},
 	];
 
-	// Función para verificar si una ruta está activa
 	const isActive = (href: string) => {
 		if (href === "/dashboard") {
 			return pathname === "/dashboard";
@@ -53,7 +52,6 @@ export function Sidebar() {
 		return pathname.startsWith(href);
 	};
 
-	// Función para verificar si algún item del inventory está activo
 	const isInventoryItemActive = () => {
 		return inventoryItems.some((item) => isActive(item.href));
 	};
@@ -70,7 +68,7 @@ export function Sidebar() {
 
 	return (
 		<div className="w-64 bg-white border-r border-gray-200 flex flex-col">
-			{/* Logo */}
+		
 			<div className="p-4 border-b border-gray-200 flex items-center justify-center ">
 				<Image
 					src="/stockControlLogo.webp"

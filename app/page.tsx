@@ -15,19 +15,16 @@ export default function LoginPage() {
 			<div className="relative w-full max-w-md p-8 bg-dashboard backdrop-blur-xl rounded-3xl shadow-2xl border border-dashboard">
 				<div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-3xl pointer-events-none" />
 				<div className="relative z-10">
-					<div className="flex w-full items-center gap-2 mb-8">
-						<Image
-							src="/logo.png"
-							alt="StockControl"
-							width={60}
-							height={60}
-						/>
-						<h3 className="text-black font-semibold text-xl">
-							StockControl
-						</h3>
+					<div className="flex w-full items-center justify-center gap-2 mb-8">
+							<Image
+								src="/stockControlLogo.webp"
+								alt="Logo"
+								width={120}
+								height={40}
+								className="object-contain"
+							/>
 					</div>
 
-					{/* Tabs para elegir tipo de autenticación */}
 					<div className="flex mb-6 bg-gray-100 rounded-lg p-1">
 						<button
 							type="button"
