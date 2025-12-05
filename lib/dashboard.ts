@@ -1,5 +1,6 @@
+import { redirect } from "next/navigation";
 import { getAuthToken } from "./api";
-import { DailyActivitySchema, DashboardMetricsSchema } from "./schemas/dashboard";
+import { AIInsightsSchema, DailyActivitySchema, DashboardMetricsSchema } from "./schemas/dashboard";
 
 
 export interface LowStockProduct {
@@ -14,7 +15,7 @@ export async function getDashboardMetrics() {
   const token = await getAuthToken();
 
   if (!token) {
-    throw new Error('No autorizado');
+    redirect('/');
   }
 
   const url = `${process.env.API_URL}/sales/dashboard/metrics`;
@@ -42,7 +43,7 @@ export async function getLast30DaysActivity(){
   const token = await getAuthToken();
 
   if (!token) {
-    throw new Error('No autorizado');
+    redirect('/');
   }
 
   const url = `${process.env.API_URL}/sales/dashboard/activity`;
@@ -70,7 +71,7 @@ export async function getLowStockProducts(): Promise<LowStockProduct[]> {
   const token = await getAuthToken();
 
   if (!token) {
-    throw new Error('No autorizado');
+    redirect('/');
   }
 
   const url = `${process.env.API_URL}/products/low-stock`;
@@ -95,7 +96,7 @@ export async function getTopProducts(period: 'daily' | 'weekly' | 'monthly' = 'w
   const token = await getAuthToken();
 
   if (!token) {
-    throw new Error('No autorizado');
+    redirect('/');
   }
 
   const url = `${process.env.API_URL}/sales/top-products?period=${period}`;
@@ -116,4 +117,36 @@ export async function getTopProducts(period: 'daily' | 'weekly' | 'monthly' = 'w
   }
 
   return response.json();
+}
+
+export async function getAIInsights() {
+  try {
+    const token = await getAuthToken();
+
+    if (!token) {
+      redirect('/');
+    }
+
+    const url = `${process.env.API_URL}/ai/insights`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: 'Error desconocido' }));
+      console.error('Error al obtener insights de IA:', error);
+      return { insights: [] };
+    }
+
+    const data = await response.json();
+    return AIInsightsSchema.parse(data);
+  } catch (error) {
+    console.error('Error inesperado al obtener insights de IA:', error);
+    return { insights: [] };
+  }
 }
