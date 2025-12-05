@@ -1,31 +1,31 @@
-import { MetricsCards } from "@/components/dashboard/metrics-cards";
-import { ActivityChart } from "@/components/activity-chart";
+import { MetricsCards } from "@/components/dashboard/MetricsCards";
+import { ActivityChart } from "@/components/ActivityChart";
 import { LowStockProducts } from "@/components/dashboard/LowStockProducts";
-import { AIAnalyticsCard } from "@/components/dashboard/ai-analytics-card";
+import { AIAnalyticsCard } from "@/components/dashboard/AIAnalyticsCard";
 import { DollarSign, Package, ShoppingCart, AlertTriangle } from "lucide-react";
-import { getDashboardMetrics, getLast30DaysActivity, getLowStockProducts, getTopProducts } from "@/lib/dashboard";
+import { getAIInsights, getDashboardMetrics, getLast30DaysActivity, getLowStockProducts, getTopProducts } from "@/lib/dashboard";
 import { getProducts } from "@/lib/products";
 import { formatCurrency } from "@/lib/utils";
 import TopProductsCard from "@/components/dashboard/TopProductsCard";
 
 export default async function Dashboard() {
-  const [dashboardMetrics , activity, lowStockProducts, allProducts, topProducts] = await Promise.all([
+  const [dashboardMetrics , activity, lowStockProducts, allProducts, topProducts, aiInsights] = await Promise.all([
     getDashboardMetrics(),
     getLast30DaysActivity(),
     getLowStockProducts(),
     getProducts(),
     getTopProducts('weekly'),
+    getAIInsights()
   ]);
 
-  // Calcular total de productos en stock
   const totalStock = allProducts.reduce((sum, product) => sum + product.stock, 0);
 
-  // Calcular porcentaje de cambio (simplificado - comparación con ayer sería ideal)
-  const todaySales = parseFloat(dashboardMetrics.today.totalSales);
-  const weekAverage = parseFloat(dashboardMetrics.week.totalSales) / 7;
-  const salesTrend = weekAverage > 0 
-    ? (((todaySales - weekAverage) / weekAverage) * 100).toFixed(1)
-    : "0.0";
+  
+  const todaySales = dashboardMetrics.today.transactionCount;
+  const yesterdaySales = dashboardMetrics.yesterday.transactionCount;
+  const salesTrend = yesterdaySales > 0 
+    ? (((todaySales - yesterdaySales) / yesterdaySales) * 100 ).toFixed(1)
+    : todaySales > 0 ? '100' : '0';
 
 	return (
 		<div className="flex-1 space-y-6 p-6">
@@ -43,8 +43,6 @@ export default async function Dashboard() {
         <MetricsCards
           title="Total Productos en Stock"
           value={totalStock.toLocaleString('es-MX')}
-          trend={`${allProducts.length} productos`}
-          trendUp={true}
           icon={<Package className="w-5 h-5" />}
           iconBgColor="bg-green-500"
         />
@@ -52,8 +50,6 @@ export default async function Dashboard() {
         <MetricsCards
           title="Ventas de la Semana"
           value={formatCurrency(+dashboardMetrics.week.totalSales)}
-          trend={`${dashboardMetrics.week.transactionCount} transacciones`}
-          trendUp={dashboardMetrics.week.transactionCount > 0}
           icon={<ShoppingCart className="w-5 h-5" />}
           iconBgColor="bg-orange-500"
         /> 
@@ -72,7 +68,7 @@ export default async function Dashboard() {
             />
           </div>
         </div>
-        <AIAnalyticsCard />
+        <AIAnalyticsCard insights={aiInsights.insights}/>
       </div>
 		</div>
 	);
