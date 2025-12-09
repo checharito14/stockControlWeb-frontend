@@ -21,10 +21,10 @@ async function getProductById(id: string) {
 
 	const product = ProductSchema.parse(json);
 
-	return product;
+    return product;
 }
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
+export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
 
     const {id} = await params;
     const product = await getProductById(id);

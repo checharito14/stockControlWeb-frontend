@@ -41,11 +41,12 @@ export async function editProduct(
 	const json = await req.json();
 	
 	if (!req.ok) {
-		const errors = ErrorResponseSchema.parse(json);
-		return {
-			errors: errors.message.map((error) => error),
-			success: "",
-		};
+		   const error = ErrorResponseSchema.parse(json)
+        const errorMessages = Array.isArray(error.message) ? error.message : [error.message];
+        return {
+            errors: errorMessages,
+            success: ''
+        }
 	}
 
 	return {

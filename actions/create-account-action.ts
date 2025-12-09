@@ -42,11 +42,12 @@ export async function register(prevState: ActionStateType, formData: FormData) {
 	const json = await req.json();
 
 	if (!req.ok) {
-		const error = ErrorResponseSchema.parse(json);
-		return {
-			errors: error.message.map((error) => error),
-			success: "",
-		};
+	   const error = ErrorResponseSchema.parse(json)
+        const errorMessages = Array.isArray(error.message) ? error.message : [error.message];
+        return {
+            errors: errorMessages,
+            success: ''
+        }
 	}
 
 	const successMessage = SuccessSchema.parse(json);

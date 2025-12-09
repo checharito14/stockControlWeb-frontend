@@ -49,8 +49,9 @@ export async function addClient(prevState: ActionStateType, formData: FormData) 
 
     if(!req.ok) {
         const error = ErrorResponseSchema.parse(json)
+        const errorMessages = Array.isArray(error.message) ? error.message : [error.message];
         return {
-            errors: error.message.map(error => error),
+            errors: errorMessages,
             success: ''
         }
     }

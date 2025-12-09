@@ -1,7 +1,7 @@
 "use client";
 
 import { FloatingLabelInput } from "@/components/ui/floating-label-input";
-import { Product } from "@/lib/schemas/auth";
+import { Product } from "@/lib/schemas/products";
 
 export default function ProductForm({product}: {product?: Product}) {
 	return (
