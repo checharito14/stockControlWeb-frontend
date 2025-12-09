@@ -12,7 +12,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   const user = await getUserProfile()
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header user={user}/>

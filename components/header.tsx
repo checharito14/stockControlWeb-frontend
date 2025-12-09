@@ -8,15 +8,21 @@ import {
 	User as UserIcon,
 	UserCircle,
 	LogOut,
+	Menu,
+	PanelLeftClose,
+	PanelLeftOpen,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import { logout } from "@/actions/logout-action";
 import Link from "next/link";
 import { User } from "@/lib/schemas/auth";
+import { useUiStore } from "@/lib/ui-store";
 
 export function Header({ user }: { user: User }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
+	
+	const { isExpanded, toggleExpanded, toggleMobileOpen } = useUiStore();
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -39,7 +45,34 @@ export function Header({ user }: { user: User }) {
 
 	return (
 		<header className="bg-white border-b border-gray-200 px-6 py-4">
-			<div className="flex items-center justify-end">
+			<div className="flex items-center justify-between">
+				{/* Botones de control del sidebar */}
+				<div className="flex items-center space-x-2">
+					{/* Botón hamburguesa (solo móvil) */}
+					<Button
+						variant="ghost"
+						size="icon"
+						className="md:hidden"
+						onClick={toggleMobileOpen}
+					>
+						<Menu className="w-5 h-5" />
+					</Button>
+
+					{/* Botón toggle expandir/colapsar (solo desktop) */}
+					<Button
+						variant="ghost"
+						size="icon"
+						className="hidden md:flex"
+						onClick={toggleExpanded}
+					>
+						{isExpanded ? (
+							<PanelLeftClose className="w-5 h-5" />
+						) : (
+							<PanelLeftOpen className="w-5 h-5" />
+						)}
+					</Button>
+				</div>
+
 				<div className="flex items-center space-x-4">
 					{/* User Menu */}
 					<div className="relative" ref={menuRef}>
