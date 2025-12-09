@@ -10,7 +10,7 @@ export default function LoginPage() {
 	return (
 		<div
 			className="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat"
-			style={{ backgroundImage: "url('backk.jpg')" }}
+			style={{ backgroundImage: "url('back.jpg')" }}
 		>
 			<div className="relative w-full max-w-md p-8 bg-dashboard backdrop-blur-xl rounded-3xl shadow-2xl border border-dashboard">
 				<div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-3xl pointer-events-none" />

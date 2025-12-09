@@ -49,7 +49,7 @@ export default function SalesHistoryFilters({ currentPeriod, dateRange }: SalesH
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <div className="flex flex-col lg:flex-row gap-4 items-end">
+      <div className="flex flex-col lg:flex-row gap-4 lg:items-end">
         {/* Botones de periodo */}
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 mb-2">

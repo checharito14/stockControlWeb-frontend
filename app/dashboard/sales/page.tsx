@@ -12,9 +12,9 @@ export default async function SalesPage() {
 	]);
 
 	return (
-		<div className="flex space-x-6 h-full">
-			<div className="flex-grow bg-white rounded-lg shadow p-6">
-				<h1 className="text-2xl font-bold text-gray-800 mb-6">
+		<div className="flex flex-col lg:flex-row gap-4 lg:gap-6 h-full">
+			<div className="flex-grow bg-white rounded-lg shadow p-4 md:p-6">
+				<h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
 					Nueva Venta
 				</h1>
 
