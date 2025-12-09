@@ -1,7 +1,7 @@
 import type React from "react"
 import { Sidebar } from "@/components/Sidebar"
-import { Header } from "@/components/Header"
 import { getUserProfile } from "@/lib/api"
+import { Header } from "@/components/Header"
 
 interface DashboardLayoutProps {
   children: React.ReactNode

@@ -6,15 +6,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
 	ChevronDown,
 	User as UserIcon,
-	UserCircle,
 	LogOut,
 	Menu,
 	PanelLeftClose,
 	PanelLeftOpen,
 } from "lucide-react";
-import { redirect } from "next/navigation";
 import { logout } from "@/actions/logout-action";
-import Link from "next/link";
 import { User } from "@/lib/schemas/auth";
 import { useUiStore } from "@/lib/ui-store";
 
