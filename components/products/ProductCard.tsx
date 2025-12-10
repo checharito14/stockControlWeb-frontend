@@ -73,7 +73,7 @@ export default function ProductCard({ product }: { product: Product }) {
 					title="Confirmar eliminación"
 					description="¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer."
 				>
-					<DeleteProductForm productId={product.id} />
+					<DeleteProductForm productId={product.id} onSuccess={() => setIsOpen(false)} />
 				</ConfirmDialog>
 			)}
 		</>

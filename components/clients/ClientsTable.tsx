@@ -169,7 +169,7 @@ export default function ClientsTable({ clients }: { clients: Client[] }) {
 					title="Confirmar eliminación"
 					description="¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer."
 				>
-					<DeleteClientForm clientId={selectedClientId} />
+					<DeleteClientForm clientId={selectedClientId} onSuccess={() => setSelectedClientId(null)} />
 				</ConfirmDialog>
 			)}
 

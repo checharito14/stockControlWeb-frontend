@@ -158,7 +158,7 @@ export default function CouponsTable({ coupons }: { coupons: Coupon[] }) {
 					title="Confirmar eliminación"
 					description="¿Estás seguro de que deseas eliminar este cupón? Esta acción no se puede deshacer."
 				>
-					<DeleteCouponForm couponId={selectedCouponId} />
+					<DeleteCouponForm couponId={selectedCouponId} onSuccess={() => setSelectedCouponId(null)} />
 				</ConfirmDialog>
 			)}
 
