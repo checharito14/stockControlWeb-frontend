@@ -123,7 +123,7 @@ export function TicketPDF({ sale }: TicketPDFProps) {
             </View>
             <View style={styles.infoRow}>
               <Text style={styles.label}>Cliente:</Text>
-              <Text>{sale.clientId ? `#${sale.clientId}` : '-'}</Text>
+              <Text>{sale.clientId ? `#${sale.client}` : '-'}</Text>
             </View>
           </View>
 

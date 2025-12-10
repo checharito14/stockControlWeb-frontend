@@ -39,6 +39,8 @@ export const SaleSchema = z.object({
 	userId: z.number(),
 	clientId: z.number().nullable(),
 	couponId: z.number().nullable(),
+	client: z.string().nullable(),
+	coupon: z.string().nullable(),
 	subtotal: z.coerce.number(),
 	discount: z.coerce.number(),
 	total: z.coerce.number(),
